@@ -1,0 +1,14 @@
+1  from models import Shelf, Task, db
+2
+3  # Check inventory levels
+4  shelves = Shelf.query.all()
+5
+6  for shelf in shelves:
+7      if shelf.quantity < shelf.threshold:
+8          # Create restocking task
+9          task = Task(shelf_id=shelf.id, status="Pending")
+10         db.session.add(task)
+11
+12 db.session.commit()
+13 print("Low stock detected and tasks generated")
+
